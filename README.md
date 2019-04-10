@@ -17,7 +17,7 @@ Follow the instructions for each of the following code samples in [Compliler Exp
    
 3. [malloc array](https://godbolt.org/z/bBl0zx)
    1. How does this case differ from the previous one?
-   2. [**hard**] Write your own tiny `malloc` by declaring a large `FILL` area and writing a `malloc` and a `free` subroutine.
+   2. [**hard**] Write your own tiny `malloc` by declaring a large `FILL` area and writing a `malloc` and a `free` subroutine. *Assume you are not getting any `free` calls until you are done with the `malloc` calls. In other words, assume you are not going to have holes in the `FILL` memory you manage for allocations by `malloc`.*
    
 4. [arrays](https://godbolt.org/z/lcH006)
    1. Port this code to VisUAL.
