@@ -17,7 +17,40 @@ Follow the instructions for each of the following code samples in [Compliler Exp
    
 3. [malloc array](https://godbolt.org/z/bBl0zx)
    1. How does this case differ from the previous one?
-   2. [**hard**] Write your own tiny `malloc` by declaring a large `FILL` area and writing a `malloc` and a `free` subroutine. *Assume you are not getting any `free` calls until you are done with the `malloc` calls. In other words, assume you are not going to have holes in the `FILL` memory you manage for allocations by `malloc`.*
+   2. [**hard**] Write your own tiny `malloc` library by declaring a large `FILL` area and writing a `malloc` and a `free` subroutines that manage allocations to that memory area. 
+      1. `malloc` works approximately as follows:
+         - it takes as argument the number of bytes requested
+         - it finds an appropriate region of the heap that can satisfy the request and marks it as allocated
+         - it adds a small *metadata* memory block of known size on top of the region and writes the size of the region in the block
+         - returns a pointer to the region, not including the metadata block
+         - if the allocation fails for any reason (e.g. running out of memory), it returns `NULL` (0x00000000), which is an invalid address for user programs
+         - allocates regions in from-lower-to-higher address orientation
+      2. `free` works approximately as follows:
+         - it takes the pointer returned by `malloc`
+         - it subtracts the size of the metadata block from this address
+         - it reads the size of the allocated region
+         - it marks the cumulative (metadata block + region) previously allocated area as available
+      3. Non-interleaving of calls:
+         - assume all the calls to `malloc` precede all the calls to `free`
+         - assume the `free` calls will be made in the reverse order of the `malloc` calls, as in 
+           ```c
+           int *p1 = (int *) malloc(200 * sizeof(int));
+           int *p2 = (int *) malloc(300 * sizeof(int));
+           int *p3 = (int *) malloc(100 * sizeof(int));
+           
+           // use memory...
+           
+           free(p3);
+           free(p2);
+           free(p1);
+           ```
+         - this relieves you from the responsibility to manage *holes* in the memory area
+      4. Variables you will need:
+         - `memstore` (standing for _memory store_) - starting address of the fill area
+         - `storeptr` (standing for _store pointer_) - a pointer to the next available memory region
+      5. Stack:
+         - manage the subroutine (aka function) calls by creating stack frames for them to pass the arguments
+         - note that a function's stack frame only lasts between the start and end of execution of the subroutine, regardless of how many times the subroutine is called
    
 4. [arrays](https://godbolt.org/z/lcH006)
    1. Port this code to VisUAL.
