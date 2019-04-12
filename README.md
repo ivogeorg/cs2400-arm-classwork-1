@@ -53,6 +53,9 @@ Follow the instructions for each of the following code samples in [Compliler Exp
          - don't forget to manage the register bank and not overwrite register value that are needed by the *caller*
          - if you need to save registers on the stack, you can do it within the frame of the *callee*, correctly expanding the frame to fit them (note that VisUAL does not support `push` and `pop`)
          - note that a function's stack frame only lasts between the start and end of execution of the subroutine, regardless of how many times the subroutine is called
+      6. When `malloc` returns `NULL`:
+         - when you have less memory than the next requested size
+         - when the request is not a multiple of 4 _(due to the VisUAL limitation of addressing only words and correspondingly the `FILL` regions only take multiples of 4)_
    
 4. [arrays](https://godbolt.org/z/lcH006)
    1. Port this code to VisUAL.
