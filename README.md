@@ -88,4 +88,5 @@ Follow the instructions for each of the following code samples in [Compliler Exp
 3. Commit any modifications.
 4. Push your commits to your remote.
 5. For research-type questions, answer inline in the [README](README.md).
+6. **Important:** Submit the URL of your remote repository on [Google Classroom](https://classroom.google.com/u/0/c/Mjc5MjgxMTQ2NzZa/a/MzQ5MDAyMjczMDFa/details), as a private comment.
 
